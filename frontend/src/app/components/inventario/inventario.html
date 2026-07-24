@@ -1,0 +1,44 @@
+<!-- Encabezado personalizado con tu nombre para evidenciar autoría -->
+<header style="background: #1e293b; color: white; padding: 1.5rem; text-align: center; font-family: sans-serif;">
+  <h1 style="margin: 0;">🏛️ Inventario de Equipos Tecnológicos</h1>
+  <p style="margin: 0.3rem 0; color: #94a3b8; font-size: 0.9rem;">Desarrollado por: <strong>Isaac Morales</strong></p>
+  <h3 style="margin-top: 0.5rem; color: #38bdf8;">Equipos registrados: {{ equipos.length }}</h3>
+</header>
+
+<main style="padding: 2rem; max-width: 900px; margin: auto; font-family: sans-serif;">
+  <!-- Buscador -->
+  <section style="margin-bottom: 2rem; display: flex; gap: 10px;">
+    <input type="text" [(ngModel)]="busquedaCodigo" placeholder="Buscar por código..." style="padding: 8px; flex: 1;" />
+    <button (click)="buscar()" style="padding: 8px 16px; background: #0284c7; color: white; border: none; cursor: pointer; font-weight: bold;">Buscar</button>
+    <button (click)="cargarEquipos()" style="padding: 8px 16px; background: #64748b; color: white; border: none; cursor: pointer; font-weight: bold;">Ver Todos</button>
+  </section>
+
+  <!-- Formulario de Registro -->
+  <section style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid #e2e8f0;">
+    <h3>Registrar Nuevo Equipo</h3>
+    <form (ngSubmit)="guardar()" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+      <input [(ngModel)]="nuevoEquipo.codigo" name="codigo" placeholder="Código (ej. EQ-003)" required style="padding: 8px;" />
+      <input [(ngModel)]="nuevoEquipo.nombre" name="nombre" placeholder="Nombre del equipo" required style="padding: 8px;" />
+      <input [(ngModel)]="nuevoEquipo.categoria" name="categoria" placeholder="Categoría" required style="padding: 8px;" />
+      <input [(ngModel)]="nuevoEquipo.laboratorio" name="laboratorio" placeholder="Laboratorio" required style="padding: 8px;" />
+      <input [(ngModel)]="nuevoEquipo.responsable" name="responsable" placeholder="Responsable" required style="padding: 8px;" />
+      <button type="submit" style="grid-column: span 2; padding: 10px; background: #16a34a; color: white; border: none; cursor: pointer; font-weight: bold;">Registrar Equipo</button>
+    </form>
+  </section>
+
+  <!-- Lista de Tarjetas -->
+  <h3>Listado de Equipos</h3>
+  <section style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+    <div *ngFor="let eq of equipos" style="border: 1px solid #cbd5e1; padding: 1rem; border-radius: 8px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+      <h4 style="margin-top: 0; color: #0f172a;">{{ eq.nombre }} ({{ eq.codigo }})</h4>
+      <p><strong>Categoría:</strong> {{ eq.categoria }}</p>
+      <p><strong>Laboratorio:</strong> {{ eq.laboratorio }}</p>
+      <p><strong>Responsable:</strong> {{ eq.responsable }}</p>
+      <p><strong>Estado:</strong> <span style="font-weight: bold; color: #d97706;">{{ eq.estado }}</span></p>
+      <div style="display: flex; gap: 5px; margin-top: 10px;">
+        <button (click)="cambiarEstado(eq.codigo, 'Mantenimiento')" style="padding: 6px; background: #eab308; color: black; border: none; cursor: pointer; font-size: 12px; font-weight: bold;">En Mantenimiento</button>
+        <button (click)="cambiarEstado(eq.codigo, 'Disponible')" style="padding: 6px; background: #22c55e; color: white; border: none; cursor: pointer; font-size: 12px; font-weight: bold;">Disponible</button>
+      </div>
+    </div>
+  </section>
+</main>
